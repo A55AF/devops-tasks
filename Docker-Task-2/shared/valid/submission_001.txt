@@ -1,0 +1,3 @@
+student_name=Ali Mohamed
+student_id=00000001
+assignment=Linux
