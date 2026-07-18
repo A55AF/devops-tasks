@@ -1,0 +1,28 @@
+services:
+  generator:
+    build: ./generator
+    environment:
+      GENERATE_INTERVAL: 10
+    volumes:
+      - ./shared:/shared
+
+  validator:
+    build: ./validator
+    environment:
+      VALIDATE_INTERVAL: 15
+    volumes:
+      - ./shared:/shared
+
+  statistics:
+    build: ./statistics
+    environment:
+      REPORT_INTERVAL: 5
+    volumes:
+      - ./shared:/shared
+
+  archiver:
+    build: ./archiver
+    environment:
+      ARCHIVE_INTERVAL: 20
+    volumes:
+      - ./shared:/shared

@@ -28,6 +28,7 @@ while true; do
 				assignment=$assignment
 				EOF
 
+				echo "$(date +"%H%M%S%d%m%y") - submission created - $file_name"
 				((submission_id++))
 				sleep $GENERATE_INTERVAL
 			done

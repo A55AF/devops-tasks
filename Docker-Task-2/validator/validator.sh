@@ -1,9 +1,11 @@
 #!/bin/bash
 
+cd /shared/submissions
+
 while true; do
-  for submission_file in /shared/submissions/*; do
+  for submission_file in *; do
     # there is no submissions
-    is_empty=$(ls /shared/submissions)
+    is_empty=$(ls)
     if [ -z "$is_empty" ]; then
       continue
     fi
@@ -12,7 +14,7 @@ while true; do
     is_empty=$(cat "$submission_file" | grep "student_name=[[:alpha:]]\+ [[:alpha:]]\+")
     if [ -z "$is_empty" ]; then
       mv $submission_file /shared/invalid/
-      echo "$submission_file student name is empty"
+      echo "$(date +"%H%M%S%d%m%Y") - invalid submission - $submission_file"
       continue
     fi
 
@@ -20,7 +22,7 @@ while true; do
     is_empty=$(cat "$submission_file" | grep "assignment=[[:alpha:]]\+")
     if [ -z "$is_empty" ]; then
       mv $submission_file /shared/invalid/
-      echo "$submission_file assignment name is empty"
+      echo "$(date +"%H%M%S%d%m%Y") - invalid submission - $submission_file"
       continue
     fi
 
@@ -28,7 +30,7 @@ while true; do
     is_empty=$(cat "$submission_file" | grep "student_id=[[:digit:]]\+")
     if [ -z "$is_empty" ]; then
       mv $submission_file /shared/invalid
-      echo "$submission_file student id is not digits"
+      echo "$(date +"%H%M%S%d%m%Y") - invalid submission - $submission_file"
       continue
     fi
 
@@ -36,11 +38,11 @@ while true; do
     is_valid=$(ls $submission_file | grep "submission_[[:digit:]]\+.txt$")
     if [ -z "$is_valid" ]; then
       mv $submission_file /shared/invalid
-      echo "$submission_file file name is not valid"
+      echo "$(date +"%H%M%S%d%m%Y") - invalid submission - $submission_file"
       continue
     fi
 
     mv $submission_file /shared/valid
   done
-  sleep $LISTEN_INTERVAL
+  sleep $VALIDATE_INTERVAL
 done
